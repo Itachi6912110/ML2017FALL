@@ -80,9 +80,11 @@ print("end of training...")
 #                  w & b output                 #
 #################################################
 print("start writing b,w...")
-f = open('b.csv','w')
-f.write(str(b))
-f.close()
+#f = open('b.csv','w')
+#f.write(str(b))
+#f.close()
+b = np.resize(b,(1,1))
+np.savetxt('b.csv', b , delimiter=",")
 np.savetxt('w.csv', w , delimiter=",")
 
 #################################################

@@ -124,4 +124,4 @@ id_array = np.array(id_num)
 out =  np.column_stack((id_array, result))
 np.savetxt( out_file , out, delimiter=',', fmt='%i', header = 'id,label',comments='') 
 
-#print("finishing writing "+out_file+" !")
+print("finishing writing "+out_file+" !")

@@ -5,6 +5,7 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.datasets import make_gaussian_quantiles
 from sklearn.model_selection import cross_val_score
+from sklearn.externals import joblib
 
 train_x  = sys.argv[1]  #'/home/louiefu/Desktop/ML_HW2/X_train'
 train_y  = sys.argv[2]  #'/home/louiefu/Desktop/ML_HW2/Y_train'
@@ -28,9 +29,12 @@ X_test = np.delete(X_test,0,0)
 
 #process
 # Create and fit an AdaBoosted decision tree
-bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1), algorithm="SAMME.R", n_estimators=3000)
+bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1), algorithm="SAMME.R", n_estimators=1200)
 
 bdt.fit(X, y)
+
+#joblib.dump(bdt, 'dnn_model.pkl')
+
 #scores = cross_val_score(bdt, X, Y)
 #print(scores)
 print("finish training")
