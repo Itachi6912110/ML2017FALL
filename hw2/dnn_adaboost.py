@@ -29,11 +29,11 @@ X_test = np.delete(X_test,0,0)
 
 #process
 # Create and fit an AdaBoosted decision tree
-bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1), algorithm="SAMME.R", n_estimators=1200)
+bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1), algorithm="SAMME.R", n_estimators=3000)
 
 bdt.fit(X, y)
 
-#joblib.dump(bdt, 'dnn_model.pkl')
+joblib.dump(bdt, 'dnn_model.pkl')
 
 #scores = cross_val_score(bdt, X, Y)
 #print(scores)

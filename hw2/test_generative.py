@@ -1,4 +1,3 @@
-#hw2 training probabilistic generative model for classification
 import pandas as pd
 import numpy as np
 from numpy.linalg import inv
@@ -27,68 +26,7 @@ def Gauss_prob( m, inv_var, det_var, x):
 def Post_prob( P0, P1, gaus0 , gaus1):
 	return gaus1*P1 / (gaus1*P1 + gaus0*P0)
 
-#################################################
-#                training state                 #
-#################################################
 
-#read in files
-#read in X all -> All_datas :(total lines in X_train-1, 106) array
-#print("start read in train files...")
-All_datas = np.genfromtxt(train_x, delimiter=',')
-All_datas = np.delete(All_datas,0,0)
-data_count, feat_count = All_datas.shape
-
-#read in Y_exact all -> Y_exact : (total lines in Y_train-1, 106) array
-Y_exact = np.reshape(np.genfromtxt(train_y, delimiter=','),(-1,1))
-Y_exact = np.delete(Y_exact,0,0)
-
-#classify to 2 groups, class0 , class1
-#class0/1 : (106, class_data_count)
-#print("start classifying training datas...")
-class0 = np.array([])
-class1 = np.array([])
-for i in range(data_count):
-	if Y_exact[i][0] == 1:
-		class1 = np.hstack((class1,All_datas[i,:]))
-	else:
-		class0 = np.hstack((class0,All_datas[i,:]))
-
-class0 = np.transpose(np.reshape(class0,(-1,feat_count)))
-class1 = np.transpose(np.reshape(class1,(-1,feat_count)))
-feat_count0 , data_count0 = class0.shape
-feat_count1 , data_count1 = class1.shape
-P0 = data_count0 / (data_count0 + data_count1)
-P1 = data_count1 / (data_count0 + data_count1)
-
-#picking datas
-#wait to do
-
-#print("start calculating mean and var...")
-#start generating mean0/1, sigma0/1, sigma
-#mean = [sum of class 0/1 Xs]/element num of class 0/1
-#mean: goal to make (106,1)
-mean0 = np.reshape(np.sum(class0,axis=1)/data_count0,(-1,1))
-mean1 = np.reshape(np.sum(class1,axis=1)/data_count1,(-1,1))
-
-#sigma0/1 = [sum of (Xi-mean0/1)(Xi-mean0/1)-T] / count0/1
-#sigma: goal to make (106,106)
-Mean0 = np.repeat(mean0,data_count0,axis=1)
-Mean1 = np.repeat(mean1,data_count1,axis=1)
-sigma0 = np.dot(class0-Mean0,np.transpose(class0-Mean0)) / data_count0
-sigma1 = np.dot(class1-Mean1,np.transpose(class1-Mean1)) / data_count1
-sigma = P0 * sigma0 + P1 * sigma1
-
-#################################################
-#              m & sigma output                 #
-#################################################
-#print("start writing m0,m1,sigma...")
-P0 = np.reshape(np.array([P0]),(1,1))
-P1 = np.reshape(np.array([P1]),(1,1))
-np.savetxt('P0.csv', P0 , delimiter=",")
-np.savetxt('P1.csv', P1 , delimiter=",")
-np.savetxt('m0.csv', mean0 , delimiter=",")
-np.savetxt('m1.csv', mean1 , delimiter=",")
-np.savetxt('sigma.csv', sigma , delimiter=",")
 
 #################################################
 #                  test result                  #
@@ -101,6 +39,16 @@ Test_datas = np.genfromtxt(test_x, delimiter=',')
 Test_datas = np.delete(Test_datas,0,0) 
 Test_datas = np.transpose(Test_datas)
 test_feat_count, test_data_count = Test_datas.shape
+
+mean0 = np.reshape(np.genfromtxt('./m0.csv', delimiter=','),(-1,1))
+mean1 = np.reshape(np.genfromtxt('./m1.csv', delimiter=','),(-1,1))
+sigma = np.genfromtxt('./sigma.csv', delimiter=',')
+P0 = np.genfromtxt('./P0.csv', delimiter=',')
+P1 = np.genfromtxt('./P1.csv', delimiter=',')
+#print(mean0.shape)
+#print(mean1.shape)
+#print(sigma.shape)
+#input()
 
 #making result
 result = np.zeros(test_data_count)

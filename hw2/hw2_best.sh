@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 dnn_adaboost.py $3 $4 $5 $6
+python3 test_dnn.py $3 $4 $5 $6
