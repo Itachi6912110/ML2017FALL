@@ -37,25 +37,6 @@ PATIENCE = 3
 #################################################
 #                  Functions                    #
 #################################################
-
-def read_train(file):
-	f = open(file,'r')
-	x = list()
-	y = list()
-	for line in f.readlines():
-		x.append(line[10:-1])
-		y.append(line[0])
-	return np.array(x),np.array(y).astype(int)
-
-def read_corpus(file):
-	f = open(file,'r')
-	x = list()
-	y = list()
-	for line in f.readlines():
-		x.append(line[:-1])
-	f.close()
-	return np.array(x)
-
 def word2idx(model,text):
 	vocab = dict([(k,v.index) for k,v in model.wv.vocab.items()]);
 	content = np.zeros((len(text),32))
@@ -101,14 +82,14 @@ embed_model = w2v.Word2Vec.load(embed_model_file)
 weights = np.array(embed_model.wv.syn0)
 
 #load data
-#X_temp, Y = read_train(sys.argv[1])
+#read in Y label
 f = open(sys.argv[1],'r')
 y = []
 for line in f.readlines():
 	y.append(line[0])
 Y = np.array(y).astype(int)
 f.close()
-#data = read_corpus(corpus_file)
+#read in all datas
 f = open(corpus_file,'r')
 x = []
 for line in f.readlines():
