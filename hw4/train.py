@@ -17,12 +17,13 @@ import os
 #################################################
 #               GPU memory limit                #
 #################################################
+"""
 os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 from keras.backend.tensorflow_backend import set_session
 config = tf.ConfigProto()
 config.gpu_options.per_process_gpu_memory_fraction = 0.25
 set_session(tf.Session(config=config))
-
+"""
 #################################################
 #                  Parameters                   #
 #################################################
