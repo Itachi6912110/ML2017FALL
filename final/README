@@ -1,0 +1,19 @@
+使用套件:
+numpy  1.14.0
+keras  2.0.8 (tensorflow backend)
+gensim 3.1.0
+jieba  0.39
+h5py   2.7.1
+
+執行code方法:
+1. cd src
+2. bash final.sh <test data path> <output path>
+
+
+
+
+
+資料夾說明(請勿更動):
+src/ 	    : 存放code的資料夾
+preprocess/ : parse_test.py執行後存放預處理資料的位置
+model/      : script中下載模型後存放的位置
